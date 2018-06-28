@@ -66,7 +66,7 @@ import { HttpModule } from '@angular/http';
     PipesModule,
     routing, HttpClientModule, Ng2SmartTableModule, NgxDatatableModule,
     DirectivesModule,
-    RouterModule.forChild(routes), LoginModule, HttpModule
+    RouterModule.forChild(routes), LoginModule, HttpModule,
   ],
 
 

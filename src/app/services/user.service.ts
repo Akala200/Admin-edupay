@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/observable';
 import {User} from '../model/user.model';
 import 'rxjs/add/operator/share'
 

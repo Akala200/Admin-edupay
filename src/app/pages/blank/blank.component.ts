@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import {Observable} from 'rxjs/observable';
 import {User} from '../../model/user.model';
 import { Subject } from 'rxjs/Subject';
 import { UserService } from '../../services/user.service';
