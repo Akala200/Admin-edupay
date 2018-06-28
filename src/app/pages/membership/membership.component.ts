@@ -19,13 +19,13 @@ export class MembershipComponent implements OnInit {
 
   public menuItems: Array<any>;
   Allstatus: any = [];
-  public schools: School[];
-  public school: School;
-  public searchText: string;
-  public p: any;
-  public modalRef: NgbModalRef;
-  public form: FormGroup;
-  public genderOption: string;
+  private schools: School[];
+  private school: School;
+  private searchText: string;
+  private p: any;
+  private modalRef: NgbModalRef;
+  private form: FormGroup;
+  private genderOption: string;
 
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
