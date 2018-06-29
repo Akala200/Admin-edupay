@@ -3,13 +3,13 @@
   "version": "2.2.0",
   "license": "MIT",
   "scripts": {
+    "start": "node server.js",
     "ng": "ng",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": " ng build --aot -prod",
-    "start": "node server.js"
+    "postinstall": "ng build --aot --prod"
   },
   "private": true,
   "dependencies": {
