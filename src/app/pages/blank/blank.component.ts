@@ -109,7 +109,7 @@ export class BlankComponent {
 
   public loadData(data) {
     const req = new XMLHttpRequest();
-    req.open('GET', 'http://edupay-api.azurewebsites.net/api/admin/user/get-all');
+    req.open('GET', 'assets/data/users.json');
     req.onload = () => {
       data(JSON.parse(req.response));
     };
