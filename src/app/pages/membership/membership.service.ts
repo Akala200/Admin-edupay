@@ -6,8 +6,7 @@ import { School } from '../../model/school.model';
 
 @Injectable()
 export class MembershipService {
-    baseUrl = 'http://edupay-api.azurewebsites.net';
-
+    baseUrl = 'assets/data/schools.json'; /**'http://edupay-api.azurewebsites.net */
     constructor(private http: HttpClient) {
 
     }
