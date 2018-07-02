@@ -20,6 +20,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { ToastrModule } from 'ngx-toastr';
 import { CreateService } from './services/create.service';
 import { LoginModule } from './pages/login/login.module';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import 'rxjs/Rx';
 
 
@@ -43,7 +44,8 @@ import 'rxjs/Rx';
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true
-  } ],
+  }, {provide: LocationStrategy, useClass: HashLocationStrategy}
+],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

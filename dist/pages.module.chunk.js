@@ -439,7 +439,7 @@ var PagesModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_6__theme_pipes_pipes_module__["a" /* PipesModule */],
                 __WEBPACK_IMPORTED_MODULE_7__pages_routing__["a" /* routing */], __WEBPACK_IMPORTED_MODULE_25__angular_common_http__["c" /* HttpClientModule */], __WEBPACK_IMPORTED_MODULE_26_ng2_smart_table__["b" /* Ng2SmartTableModule */], __WEBPACK_IMPORTED_MODULE_27__swimlane_ngx_datatable__["NgxDatatableModule"],
                 __WEBPACK_IMPORTED_MODULE_28__theme_directives_directives_module__["a" /* DirectivesModule */],
-                __WEBPACK_IMPORTED_MODULE_29__angular_router__["e" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_30__login_login_module__["routes"]), __WEBPACK_IMPORTED_MODULE_30__login_login_module__["LoginModule"], __WEBPACK_IMPORTED_MODULE_35__angular_http__["c" /* HttpModule */]
+                __WEBPACK_IMPORTED_MODULE_29__angular_router__["e" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_30__login_login_module__["routes"]), __WEBPACK_IMPORTED_MODULE_30__login_login_module__["LoginModule"], __WEBPACK_IMPORTED_MODULE_35__angular_http__["c" /* HttpModule */],
             ],
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_8__pages_component__["a" /* PagesComponent */],
