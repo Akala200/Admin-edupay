@@ -9,7 +9,7 @@
         </div>
     
         <!-- Login Form -->
-        <form #loginData = "ngForm" (ngSubmit) = "loginUser(loginData.value)">
+        <form #loginData = "ngForm" (ngSubmit) = "loginUser()">
           <input type="text" id="email" class="fadeIn second" placeholder="Email"  #email ngModel name="email" required >
           <input type="password" id="password" class="fadeIn third" placeholder="password"  #password ngModel name="password" required >
           <div style="margin-right: 240px; margin-bottom:  5px; margin-top:  10px;"><input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe">  Remember me</div>
