@@ -20,11 +20,16 @@ const types = ['success', 'error', 'info', 'warning'];
 })
 export class LoginComponent {
 
+
   // tslint:disable-next-line:no-inferrable-types
   isLoginError: boolean = false;
   loginUserData = {};
   private _loginUrl = 'https://reqres.in/api/login';
   options: GlobalConfig;
+    model: any = {};
+    loading = false;
+    returnUrl: string;
+
 
 
 
@@ -34,30 +39,24 @@ export class LoginComponent {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
-  loginUser(email, password, rememberMe) {
-    console.log(email, password, rememberMe);
+  loginUser() {
+    this.loading = true;
+    this. _auth.login(this.model.email, this.model.password)
+        .subscribe(
+            data => {
+                this. _router.navigate([this.returnUrl]);
+            },
+            (err: HttpErrorResponse) => {
 
-    const body = JSON.stringify({ email: email, password: password, rememberMe: rememberMe});
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this._loginUrl + '/token', body, {  headers: headers }).subscribe(
-      res => {
-        console.log(res);
-        this.toastrService.success('You are successfully logged in!', 'Success!');
-        this. _router.navigateByUrl('/pages/dashboard')
-      },
-      (err: HttpErrorResponse) => {
-
-        console.log(err.error);
-        console.log(err.name);
-        console.log(err.message);
-        console.log(err.status);
-        this.toastrService.error('Please try again', 'Unable to log in');
-      }
-    )
+              console.log(err.error);
+              console.log(err.name);
+              console.log(err.message);
+              console.log(err.status);
+              this.toastrService.error('Please try again', 'Unable to log in');
+            });
+  }
   }
 
 
-  // tslint:disable-next-line:use-life-cycle-interface
 
 
-}
