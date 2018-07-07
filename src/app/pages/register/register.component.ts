@@ -11,12 +11,12 @@ import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators} from 
 export class RegisterComponent {
     public router: Router;
     public form:FormGroup;
-    public name:AbstractControl;
+    public name: AbstractControl;
     public email:AbstractControl;
     public password:AbstractControl;
     public confirmPassword:AbstractControl;
-    
-    constructor(router:Router, fb:FormBuilder){
+
+    constructor(router:Router, fb:FormBuilder) {
         this.router = router;
         this.form = fb.group({
             name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
@@ -38,13 +38,15 @@ export class RegisterComponent {
         }
     }
 
-    ngAfterViewInit(){
+    // tslint:disable-next-line:use-life-cycle-interface
+    ngAfterViewInit() {
         document.getElementById('preloader').classList.add('hide');
     }
 }
 
 export function emailValidator(control: FormControl): {[key: string]: any} {
-    var emailRegexp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;    
+    // tslint:disable-next-line:prefer-const
+    let emailRegexp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;    
     if (control.value && !emailRegexp.test(control.value)) {
         return {invalidEmail: true};
     }
@@ -52,8 +54,8 @@ export function emailValidator(control: FormControl): {[key: string]: any} {
 
 export function matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
     return (group: FormGroup) => {
-        let password= group.controls[passwordKey];
-        let passwordConfirmation= group.controls[passwordConfirmationKey];
+        const password= group.controls[passwordKey];
+        const passwordConfirmation = group.controls[passwordConfirmationKey];
         if (password.value !== passwordConfirmation.value) {
             return passwordConfirmation.setErrors({mismatchedPasswords: true})
         }

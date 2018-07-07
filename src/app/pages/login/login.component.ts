@@ -34,7 +34,7 @@ export class LoginComponent {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
-  OnSubmit(email, password, rememberMe) {
+  loginUser(email, password, rememberMe) {
     console.log(email, password, rememberMe);
 
     const body = JSON.stringify({ email: email, password: password, rememberMe: rememberMe});
