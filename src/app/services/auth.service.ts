@@ -7,14 +7,14 @@ import 'rxjs/add/operator/map';
 
 
 @Injectable()
-export class AuthenticationService {
+export class AuthService {
 
   private _loginUrl = 'https://reqres.in';
 
     constructor(private http: HttpClient) { }
 
-    login(email: string, password: string, rememberMe: boolean) {
-        return this.http.post<any>( this._loginUrl + '/api/login', { email: email, password: password, rememberMe: rememberMe })
+    login(email: string, password: string) {
+        return this.http.post<any>( this._loginUrl + '/api/login', { email: email, password: password })
             .map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {

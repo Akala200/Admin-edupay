@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import {  Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {User} from '../model/user.model'
+import { id } from '@swimlane/ngx-datatable/release/utils';
 
 @Injectable()
 export class CreateService {
@@ -21,7 +22,8 @@ export class CreateService {
       phoneNumber: user.phoneNumber,
       gender: user.gender,
       rolename: user.rolename,
-      password: user.password
+      password: user.password,
+      id: user.id
     }
     return this.http.post(this.rootUrl + '/user/create', body);
   }

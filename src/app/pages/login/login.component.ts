@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service'
 import { HttpErrorResponse, HttpHeaders, HttpClient} from '@angular/common/http';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService, GlobalConfig } from 'ngx-toastr';
+import { AuthService } from '../../services/auth.service';
 
 
 
