@@ -41,7 +41,7 @@ export class ToasterComponent implements OnInit {
   message = '';
   version = VERSION;
   private lastInserted: number[] = [];
-  constructor(public toastrService: ToastrService) { 
+  constructor(public toastrService: ToastrService) {
     this.options = this.toastrService.toastrConfig;
   }
 
@@ -55,7 +55,7 @@ export class ToasterComponent implements OnInit {
     let m = this.message;
     let t = this.title;
     if (!this.title.length && !this.message.length) {
-      const randomMessage = quotes[Math.floor(Math.random()*quotes.length)];
+      const randomMessage = quotes[Math.floor(Math.random() * quotes.length)];
       m = randomMessage.message;
       t = randomMessage.title;
     }

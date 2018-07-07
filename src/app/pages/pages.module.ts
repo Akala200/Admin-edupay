@@ -40,7 +40,6 @@ import { UserMenuComponent } from '../theme/components/user-menu/user-menu.compo
 import { FlagsMenuComponent } from '../theme/components/flags-menu/flags-menu.component';
 import { SideChatComponent } from '../theme/components/side-chat/side-chat.component';
 import { FavoritesComponent } from '../theme/components/favorites/favorites.component';
-import { BlankComponent } from './blank/blank.component';
 import { SearchComponent } from './search/search.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table';
@@ -53,6 +52,10 @@ import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 import { SchoolService } from '../services/school.service';
 import { HttpModule } from '@angular/http';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import { UserComponent } from './user/user.component';
+import { SchoolsModule } from './schools/schools.module';
+
 
 
 
@@ -65,8 +68,9 @@ import { HttpModule } from '@angular/http';
     MultiselectDropdownModule,
     PipesModule,
     routing, HttpClientModule, Ng2SmartTableModule, NgxDatatableModule,
-    DirectivesModule,
-    RouterModule.forChild(routes), LoginModule, HttpModule,
+    DirectivesModule, SchoolsModule,
+    RouterModule.forChild(routes), LoginModule, HttpModule, ToastModule.forRoot()
+
   ],
 
 
@@ -89,7 +93,7 @@ import { HttpModule } from '@angular/http';
     FlagsMenuComponent,
     SideChatComponent,
     FavoritesComponent,
-    BlankComponent,
+    UserComponent,
     SearchComponent,
   ],
   providers: [

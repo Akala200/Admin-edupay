@@ -18,7 +18,7 @@ export class Mail {
                 public selected:boolean) { }
 }
 
-let Mails = [
+const Mails = [
   new Mail(
       1, 
       'Envato Market', 
@@ -28,6 +28,7 @@ let Mails = [
       '4:08 PM',
       '<p>Congratulations! Your update to Azimuth - Angular 2 Admin Template on ThemeForest has been approved. '+
       'You can view your item here: </p>'+
+      // tslint:disable-next-line:max-line-length
       '<p><a href="http://themeforest.net/item/azimuth-angular-2-admin-template/19182105" target="blank">http://themeforest.net/item/azimuth-angular-2-admin-template/19182105</a></p>' +
       '<p>Thanks for your submission!</p>' +
       '<p>Regards,<br> Envato Market Team</p>', 

@@ -11,7 +11,7 @@ import { Settings } from '../../../app.settings.model';
 export class FooterComponent implements OnInit {
 
   public settings: Settings;
-  constructor(public appSettings:AppSettings) {
+  constructor(public appSettings: AppSettings) {
       this.settings = this.appSettings.settings;
   }
 

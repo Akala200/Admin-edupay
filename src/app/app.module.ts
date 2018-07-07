@@ -22,6 +22,8 @@ import { CreateService } from './services/create.service';
 import { LoginModule } from './pages/login/login.module';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import 'rxjs/Rx';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
+
 
 
 
@@ -38,7 +40,7 @@ import 'rxjs/Rx';
       apiKey: 'AIzaSyDe_oVpi9eRSN99G4o6TwVjJbFBNr58NxE'
     }),
     CalendarModule.forRoot(),
-    routing,  HttpClientModule, HttpModule, ToastrModule.forRoot(), LoginModule
+    routing,  HttpClientModule, HttpModule, ToastrModule.forRoot(), LoginModule, BrowserModule, ToastModule.forRoot()
   ],
   providers: [ AppSettings, AuthService, AuthGuard, CreateService, {
     provide: HTTP_INTERCEPTORS,

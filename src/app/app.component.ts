@@ -1,7 +1,9 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppSettings } from './app.settings';
 import { Settings } from './app.settings.model';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
 
 @Component({
   selector: 'app-root',
@@ -11,18 +13,19 @@ import { Settings } from './app.settings.model';
 })
 export class AppComponent {
     public settings: Settings;
-    constructor(public appSettings:AppSettings, private router:Router){
-        this.settings = this.appSettings.settings;  
-    }    
+    constructor(public appSettings: AppSettings, private router: Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
+        this.settings = this.appSettings.settings;
+        this.toastr.setRootViewContainerRef(vcr);
+    }
 
 
     /* These following methods used for theme preview, you can remove this methods */
-    
-    // ngOnInit() { 
+
+    // ngOnInit() {
     //     var demo = this.getParameterByName('demo');
     //     this.setLayout(demo);
     // }
-    
+
     // private getParameterByName(name) {
     //     var url = window.location.href;
     //     name = name.replace(/[\[\]]/g, "\\$&");
@@ -65,5 +68,5 @@ export class AppComponent {
     //     }
     //     this.router.navigate(['/']);
     // }
-   
+
 }
