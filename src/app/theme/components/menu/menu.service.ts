@@ -9,7 +9,7 @@ import { horizontalMenuItems } from './menu';
 @Injectable()
 export class MenuService {
 
-  constructor(private location:Location, 
+  constructor(private location:Location,
               private renderer2:Renderer2,
               private router:Router){ } 
 
@@ -22,16 +22,16 @@ export class MenuService {
     return horizontalMenuItems;
   }
 
-  public createMenu(menu:Array<Menu>, nativeElement, type){    
+  public createMenu(menu:Array<Menu>, nativeElement, type){
      if(type=='vertical'){
        this.createVerticalMenu(menu, nativeElement);
      }
-     if(type=='horizontal'){
+     if(type== 'horizontal'){
        this.createHorizontalMenu(menu, nativeElement);
      }
   }
 
-  public createVerticalMenu(menu:Array<Menu>, nativeElement){    
+  public createVerticalMenu(menu:Array<Menu>, nativeElement){
     let menu0 = this.renderer2.createElement('div');
     this.renderer2.setAttribute(menu0, 'id', 'menu0');
     menu.forEach((menuItem) => {
@@ -40,7 +40,7 @@ export class MenuService {
           this.renderer2.appendChild(menu0, subMenu);
         }
     });
-    this.renderer2.appendChild(nativeElement, menu0); 
+    this.renderer2.appendChild(nativeElement, menu0);
   }
 
   public createHorizontalMenu(menu:Array<Menu>, nativeElement){
@@ -55,33 +55,33 @@ export class MenuService {
           this.renderer2.appendChild(ul, subMenu);
         }
     });
-    this.renderer2.appendChild(nativeElement, nav); 
+    this.renderer2.appendChild(nativeElement, nav);
   }
 
   public createVerticalMenuItem(menu:Array<Menu>, menuItem){
     let div = this.renderer2.createElement('div');
-    this.renderer2.addClass(div, 'card'); 
+    this.renderer2.addClass(div, 'card');
     let link = this.renderer2.createElement('a');
     this.renderer2.addClass(link, 'menu-item-link');
     this.renderer2.setAttribute(link, 'data-toggle', 'tooltip');
     this.renderer2.setAttribute(link, 'data-placement', 'right');
     this.renderer2.setAttribute(link, 'data-animation', 'false');
-    this.renderer2.setAttribute(link, 'data-container', '.vertical-menu-tooltip-place');    
+    this.renderer2.setAttribute(link, 'data-container', '.vertical-menu-tooltip-place');
     this.renderer2.setAttribute(link, 'data-original-title', menuItem.title);
     let icon = this.renderer2.createElement('i');
     this.renderer2.addClass(icon, 'fa');
-    this.renderer2.addClass(icon, 'fa-'+menuItem.icon);
+    this.renderer2.addClass(icon, 'fa-' + menuItem.icon);
     this.renderer2.appendChild(link, icon);
     let span = this.renderer2.createElement('span');
     this.renderer2.addClass(span, 'menu-title');
     this.renderer2.appendChild(link, span);
     let menuText = this.renderer2.createText(menuItem.title);
     this.renderer2.appendChild(span, menuText);
-    this.renderer2.setAttribute(link, 'id', 'link'+menuItem.id);
+    this.renderer2.setAttribute(link, 'id', 'link' + menuItem.id);
     this.renderer2.addClass(link, 'transition');
     this.renderer2.appendChild(div, link);
-    if(menuItem.routerLink){             
-      this.renderer2.listen(link, "click", () => { 
+    if(menuItem.routerLink){
+      this.renderer2.listen(link, "click", () => {
           this.router.navigate([menuItem.routerLink]);
           this.setActiveLink(menu,link);
           this.closeOtherSubMenus(div);
@@ -94,18 +94,18 @@ export class MenuService {
       this.renderer2.setAttribute(link, 'target', menuItem.target);
     }
     if(menuItem.hasSubMenu){
-      this.renderer2.addClass(link, 'collapsed'); 
+      this.renderer2.addClass(link, 'collapsed');
       let caret = this.renderer2.createElement('b');
       this.renderer2.addClass(caret, 'fa');
       this.renderer2.addClass(caret, 'fa-angle-up');
       this.renderer2.appendChild(link, caret);
-      this.renderer2.setAttribute(link, 'data-toggle', 'collapse');      
-      this.renderer2.setAttribute(link, 'href', '#collapse'+menuItem.id);
+      this.renderer2.setAttribute(link, 'data-toggle', 'collapse');
+      this.renderer2.setAttribute(link, 'href', '#collapse' + menuItem.id);
       let collapse = this.renderer2.createElement('div');
-      this.renderer2.setAttribute(collapse, 'id', 'collapse'+menuItem.id);
-      this.renderer2.setAttribute(collapse, 'data-parent', '#menu'+menuItem.parentId);
+      this.renderer2.setAttribute(collapse, 'id', 'collapse' + menuItem.id);
+      this.renderer2.setAttribute(collapse, 'data-parent', '#menu' + menuItem.parentId);
       this.renderer2.addClass(collapse, 'collapse');
-      this.renderer2.appendChild(div, collapse);          
+      this.renderer2.appendChild(div, collapse);
       this.createSubMenu(menu, menuItem.id, collapse, 'vertical');
     }
     return div;
@@ -119,11 +119,11 @@ export class MenuService {
       this.renderer2.setAttribute(link, 'data-toggle', 'tooltip');
       this.renderer2.setAttribute(link, 'data-placement', 'top');
       this.renderer2.setAttribute(link, 'data-animation', 'false');
-      this.renderer2.setAttribute(link, 'data-container', '.horizontal-menu-tooltip-place');    
+      this.renderer2.setAttribute(link, 'data-container', '.horizontal-menu-tooltip-place');
       this.renderer2.setAttribute(link, 'data-original-title', menuItem.title);
       let icon = this.renderer2.createElement('i');
       this.renderer2.addClass(icon, 'fa');
-      this.renderer2.addClass(icon, 'fa-'+menuItem.icon);
+      this.renderer2.addClass(icon, 'fa-' + menuItem.icon);
       this.renderer2.appendChild(link, icon);
       let span = this.renderer2.createElement('span');
       this.renderer2.addClass(span, 'menu-title');
@@ -131,10 +131,10 @@ export class MenuService {
       let menuText = this.renderer2.createText(menuItem.title);
       this.renderer2.appendChild(span, menuText);
       this.renderer2.appendChild(li, link);
-      this.renderer2.setAttribute(link, 'id', 'link'+menuItem.id);
+      this.renderer2.setAttribute(link, 'id', 'link' + menuItem.id);
       this.renderer2.addClass(link, 'transition');
-      if(menuItem.routerLink){             
-        this.renderer2.listen(link, "click", () => {  
+      if(menuItem.routerLink) {
+        this.renderer2.listen(link, 'click', () => {
             this.router.navigate([menuItem.routerLink]);
             this.setActiveLink(menu, link);
         });
@@ -159,23 +159,23 @@ export class MenuService {
       let menus = menu.filter(item => item.parentId === menuItemId);
       menus.forEach((menuItem) => {
         let subMenu = null;
-        if(type=='vertical'){
+        if(type == 'vertical'){
            subMenu = this.createVerticalMenuItem(menu, menuItem);
         }
-        if(type=='horizontal'){
+        if(type == 'horizontal'){
            subMenu = this.createHorizontalMenuItem(menu, menuItem);
-        }      
+        }
         this.renderer2.appendChild(parentElement, subMenu);
       });
-  } 
+  }
 
   private closeOtherSubMenus(elem){
       let children = (this.renderer2.parentNode(elem)).children;
       for (let i = 0; i < children.length; i++) {
           let child = this.renderer2.nextSibling(children[i].children[0]);
           if(child){
-              this.renderer2.addClass(children[i].children[0], 'collapsed');   
-              this.renderer2.removeClass(child, 'show');               
+              this.renderer2.addClass(children[i].children[0], 'collapsed');
+              this.renderer2.removeClass(child, 'show');
           }
       }
   }
@@ -185,7 +185,7 @@ export class MenuService {
       let routerLink = url; // url.substring(1, url.length);
       let activeMenuItem = menu.filter(item => item.routerLink === routerLink);
       if(activeMenuItem[0]){
-        let activeLink = document.querySelector("#link"+activeMenuItem[0].id);
+        let activeLink = document.querySelector('#link' + activeMenuItem[0].id);
         return activeLink;
       }
       return false;
@@ -194,61 +194,61 @@ export class MenuService {
   public setActiveLink(menu:Array<Menu>, link){
       if(link){
           menu.forEach((menuItem) => {
-            let activeLink = document.querySelector("#link"+menuItem.id);
+            const activeLink = document.querySelector('#link' + menuItem.id);
             if(activeLink){
               if(activeLink.classList.contains('active-link')){
                 activeLink.classList.remove('active-link');
               }
-            }       
+            }
           });
-          this.renderer2.addClass(link, 'active-link'); 
-      }    
-  } 
+          this.renderer2.addClass(link, 'active-link');
+      }
+  }
 
   public showActiveSubMenu(menu:Array<Menu>){
       let url = this.location.path();
-      let routerLink = url; //url.substring(1, url.length);
-      let activeMenuItem = menu.filter(item => item.routerLink === routerLink);
-      if(activeMenuItem[0]){
-          let activeLink = document.querySelector("#link"+activeMenuItem[0].id);      
+      let routerLink = url; // url.substring(1, url.length);
+      const activeMenuItem = menu.filter(item => item.routerLink === routerLink);
+      if(activeMenuItem[0]) {
+          let activeLink = document.querySelector('#link' + activeMenuItem[0].id);
           let parent = this.renderer2.parentNode(activeLink);
-          while (this.renderer2.parentNode(parent)){         
+          while (this.renderer2.parentNode(parent)) {
               parent = this.renderer2.parentNode(parent);
-              if(parent.className == 'collapse'){
-                let parentMenu = menu.filter(item => item.id === activeMenuItem[0].parentId);           
-                let activeParentLink = document.querySelector("#link"+parentMenu[0].id);
+              if(parent.className == 'collapse') {
+                const parentMenu = menu.filter(item => item.id === activeMenuItem[0].parentId);
+                const activeParentLink = document.querySelector('#link' + parentMenu[0].id);
                 this.renderer2.removeClass(activeParentLink, 'collapsed');
-                this.renderer2.addClass(parent, 'show');                
+                this.renderer2.addClass(parent, 'show');
               }
-              if(parent.classList.contains('menu-wrapper')){
+              if (parent.classList.contains('menu-wrapper')) {
                 break;
               }
           }
-      }     
+      }
   }
 
-  public addNewMenuItem(menu:Array<Menu>, newMenuItem, type){
+  public addNewMenuItem(menu: Array<Menu>, newMenuItem, type) {
       menu.push(newMenuItem);
-      if(newMenuItem.parentId != 0){
-        let parentMenu =  menu.filter(item => item.id === newMenuItem.parentId);
-        if(parentMenu.length){
-            if(!parentMenu[0].hasSubMenu){
+      if (newMenuItem.parentId !== 0) {
+        const parentMenu =  menu.filter(item => item.id === newMenuItem.parentId);
+        if (parentMenu.length) {
+            if (!parentMenu[0].hasSubMenu) {
               parentMenu[0].hasSubMenu = true;
             // parentMenu[0].routerLink = null;
-          } 
-        }                
+          }
+        }
       }
       let menu_wrapper = null;
-      if(type=='vertical'){
+      if (type === 'vertical') {
         menu_wrapper = document.getElementById('vertical-menu');
       }
-      if(type=='horizontal'){
+      if (type === 'horizontal') {
         menu_wrapper = document.getElementById('horizontal-menu');
       }
       while (menu_wrapper.firstChild) {
           menu_wrapper.removeChild(menu_wrapper.firstChild);
-      }      
+      }
       this.createMenu(menu, menu_wrapper, type);
-  } 
- 
+  }
+
 }

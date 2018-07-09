@@ -135,7 +135,6 @@ export class UserComponent {
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log('Client-side error occured.');
           this.toastrService.error('User not deleted', 'error!');
 
         } else {

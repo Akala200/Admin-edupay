@@ -40,23 +40,22 @@ export class LoginComponent {
   }
 
   loginUser() {
-    this.loading = true;
-    this. _auth.login(this.model.email, this.model.password)
-        .subscribe(
-            data => {
-                this. _router.navigate([this.returnUrl]);
-            },
-            (err: HttpErrorResponse) => {
+    this._auth.loginUser(this.loginUserData)
+    .subscribe(
+        res => {
+            console.log(res)
+        this.toastrService.success('User successfully deleted', 'Success!');
+        localStorage.setItem('token', res.token)
+        this._router.navigate(['../pages/dashboard'])
 
-              console.log(err.error);
-              console.log(err.name);
-              console.log(err.message);
-              console.log(err.status);
-              this.toastrService.error('Please try again', 'Unable to log in');
-            });
-  }
-  }
+        },
+        (err: HttpErrorResponse) => {
 
-
-
-
+          console.log(err.error);
+          console.log(err.name);
+          console.log(err.message);
+          console.log(err.status);
+          this.toastrService.error('Please try again', 'Unable to log in');
+        });
+}
+}

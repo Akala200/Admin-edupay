@@ -3,6 +3,8 @@ import { trigger,  state,  style, transition, animate } from '@angular/animation
 import { AppSettings } from '../../../app.settings';
 import { Settings } from '../../../app.settings.model';
 import { MenuService } from '../menu/menu.service';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,11 +22,13 @@ import { MenuService } from '../menu/menu.service';
   ]
 })
 export class HeaderComponent implements OnInit {
+
+  logoutUserData = {}
+
   public showHorizontalMenu: boolean = true;
-  public showInfoContent:boolean = false;
   public settings: Settings;
-  public menuItems:Array<any>;
-  constructor(public appSettings:AppSettings, public menuService:MenuService) {
+  public menuItems: Array<any>;
+  constructor(public appSettings: AppSettings, public menuService:MenuService, private _auth: AuthService, private _router: Router) {
       this.settings = this.appSettings.settings;
       this.menuItems = this.menuService.getHorizontalMenuItems();
   }
@@ -36,20 +40,11 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  public closeSubMenus() {
-    const menu = document.querySelector('#menu0');
-    if (menu) {
-      for (let i = 0; i < menu.children.length; i++) {
-          const child = menu.children[i].children[1];
-          if (child) {
-              if (child.classList.contains('show')) {
-                child.classList.remove('show');
-                menu.children[i].children[0].classList.add('collapsed'); 
-              }
-          }
-      }
-    }
-  }
+
+
+  logoutUser() {
+    this._auth.logoutUser(this.logoutUserData);
+}
 
   @HostListener('window:resize')
   public onWindowResize(): void {
