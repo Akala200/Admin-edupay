@@ -1,4 +1,4 @@
-<nav class="navbar box-shadow app-header" [class.fixed-top]="settings.theme.navbarIsFixed" [class.logo-visible]="showInfoContent">
+<nav class="navbar box-shadow app-header" [class.fixed-top]="settings.theme.navbarIsFixed">
     <div class="d-flex flex-column w-100">
         <div class="d-flex justify-content-start align-items-center top-navbar">                  
             
@@ -9,7 +9,7 @@
            
 
             <div class="ml-2 mr-2 d-none d-sm-block">
-                 <a id="info-content-icon" data-toggle="collapse" href="#info-content" (click)="showInfoContent = !showInfoContent" class="d-flex" [class.show]="showInfoContent">
+                 <a id="info-content-icon" data-toggle="collapse" href="#info-content"  class="d-flex">
                 </a>
             </div>
 

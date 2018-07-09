@@ -14,8 +14,10 @@ export class AuthService {
 
     constructor(private http: HttpClient, private _router: Router) { }
 
-    loginUser(user) {
-      return this.http.post<any>(this._loginUrl, user)
+    loginUser(userName, password) {
+      const data = 'username=' + userName + '&password=' + password + '&grant_type=password';
+      const reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded', 'No-Auth': 'True' });
+      return this.http.post(this._loginUrl + '/token', data, { headers: reqHeader });
     }
 
     loggedIn() {

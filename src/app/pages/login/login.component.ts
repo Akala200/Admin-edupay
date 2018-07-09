@@ -23,7 +23,6 @@ export class LoginComponent {
 
   // tslint:disable-next-line:no-inferrable-types
   isLoginError: boolean = false;
-  loginUserData = {};
   private _loginUrl = 'https://reqres.in/api/login';
   options: GlobalConfig;
     model: any = {};
@@ -39,23 +38,22 @@ export class LoginComponent {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
-  loginUser() {
-    this._auth.loginUser(this.loginUserData)
-    .subscribe(
-        res => {
-            console.log(res)
-        this.toastrService.success('User successfully deleted', 'Success!');
-        localStorage.setItem('token', res.token)
-        this._router.navigate(['../pages/dashboard'])
+  OnSubmit(userName, password) {
+    this._auth.loginUser(userName, password).subscribe((data: any) => {
+      localStorage.setItem('token', data.access_token)
+      this._router.navigate(['../pages/dashboard'])
+    },
+    (err: HttpErrorResponse) => {
 
-        },
-        (err: HttpErrorResponse) => {
+      console.log(err.error);
+      console.log(err.name);
+      console.log(err.message);
+      console.log(err.status);
+      this.toastrService.error('Please try again', 'Unable to log in');
+    });
+  }
 
-          console.log(err.error);
-          console.log(err.name);
-          console.log(err.message);
-          console.log(err.status);
-          this.toastrService.error('Please try again', 'Unable to log in');
-        });
-}
-}
+  }
+
+
+
