@@ -15,8 +15,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   loadData() {
-    const url = 'assets/data/users.json'; /**http://edupay-api.azurewebsites.net/api/admin/user/get-all
-    */
+    const url = 'http://edupay-api.azurewebsites.net/api/admin/user/get-all';
     return this.http.get(url);
   }
 

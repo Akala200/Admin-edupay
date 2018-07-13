@@ -114,7 +114,7 @@ export class UserComponent {
 
   public loadData(data) {
     const req = new XMLHttpRequest();
-    req.open('GET', 'assets/data/users.json');
+    req.open('GET', 'http://edupay-api.azurewebsites.net/api/admin/user/get-all');
     req.onload = () => {
       data(JSON.parse(req.response));
     };
