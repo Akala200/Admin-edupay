@@ -23,6 +23,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import 'rxjs/Rx';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { AuthService } from './services/auth.service';
+import { HttpsRequestInterceptor } from './module/interceptor/http.interceptor';
 
 
 
@@ -45,6 +46,10 @@ import { AuthService } from './services/auth.service';
   providers: [ AppSettings, AuthService, AuthGuard, CreateService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,
+    multi: true
+  }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpsRequestInterceptor,
     multi: true
   }, {provide: LocationStrategy, useClass: HashLocationStrategy}
 ],

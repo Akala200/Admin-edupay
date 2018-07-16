@@ -3,10 +3,19 @@ import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { School } from './schools.model';
+import { Schools } from './schools.model';
 import { MenuService } from '../../theme/components/menu/menu.service';
-import { SchoolService } from '../../services/school.service';
 import { MembershipService } from './schools.service';
+import { Http, Response } from '@angular/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/observable/of';
+
+
 
 
 @Component({
@@ -14,19 +23,21 @@ import { MembershipService } from './schools.service';
   templateUrl: './schools.component.html',
   styleUrls: ['./schools.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [ MembershipService, MenuService, SchoolService ]
+  providers: [ MembershipService, MenuService ]
 })
 export class SchoolsComponent implements OnInit {
 
   public menuItems: Array<any>;
-  Allstatus: any = [];
-  public schools: School[];
-  public school: School;
+  allSchools: Schools[] = [];
   public searchText: string;
   public p: any;
   public modalRef: NgbModalRef;
   public form: FormGroup;
   public genderOption: string;
+  loading: boolean;
+
+
+
 
   public menuSelectSettings: IMultiSelectSettings = {
       enableSearch: true,
@@ -52,7 +63,7 @@ export class SchoolsComponent implements OnInit {
               public toastrService: ToastrService,
               public membershipService: MembershipService,
               public menuService: MenuService,
-              public modalService: NgbModal, ) {
+              public modalService: NgbModal, private http: HttpClient) {
 
     this.menuItems = this.menuService.getVerticalMenuItems();
     this.menuItems.forEach(item => {
@@ -61,11 +72,25 @@ export class SchoolsComponent implements OnInit {
         name: item.title
       }
       this.menuSelectOptions.push(menu);
-    })
+    });
+    this.loading = true;
+
   }
 
   ngOnInit() {
-    this. get_schools();
+    this.membershipService.loadData().subscribe(
+      res => {
+        this.allSchools = res;
+        this.loading = false;
+        console.log(res);
+      },
+      err => {
+        console.log('Error Occoured');
+        console.log(err);
+      }
+    );
+
+
     this.form = this.fb.group({
         id: null,
         username: [null, Validators.compose([Validators.required, Validators.minLength(5)])],
@@ -102,12 +127,6 @@ export class SchoolsComponent implements OnInit {
     });
   }
 
-  public  get_schools(): void {
-    this.membershipService.get_schools().subscribe((res: any[]) => {
-      this.schools = res;
-      });
-    }
-
 
   public openMenuAssign(event) {
     let parent = event.target.parentNode;
@@ -125,8 +144,9 @@ export class SchoolsComponent implements OnInit {
  */
 public activateSchool() {
   this.toastrService.success('School successfully activated', 'Success!');
-
 }
+
+
   public closeMenuAssign(event) {
     let parent = event.target.parentNode;
     while (parent) {
@@ -145,11 +165,10 @@ public activateSchool() {
 
   public openModal(modalContent, school) {
     if (school) {
-      this.school = school;
+      this.allSchools = school;
       this.form.setValue(school);
     } else {
-      this.school = new school();
-      this.school.settings = new school();
+      this.allSchools = new school();
     }
     this.modalRef = this.modalService.open(modalContent, { container: '.app' });
 

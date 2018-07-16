@@ -3,10 +3,11 @@ import {User} from '../../model/user.model';
 import { Subject } from 'rxjs/Subject';
 import { UserService } from '../../services/user.service';
 import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table';
-import { HttpClient, HttpBackend, HttpErrorResponse, } from '@angular/common/http';
+import { HttpClient, HttpBackend, HttpErrorResponse, HttpHeaders, } from '@angular/common/http';
 import { Http } from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { ToastrService, GlobalConfig } from 'ngx-toastr';
+
 
 
 
@@ -26,7 +27,7 @@ export class UserComponent {
   source: LocalDataSource;
 
 
-  public data = [];
+  public user = [];
   public settings = {
     selectMode: 'single',  // single|multi
     hideHeader: false,
@@ -55,7 +56,7 @@ export class UserComponent {
       deleteButtonContent: '<i class="fa fa-trash-o text-danger"></i>',
       confirmDelete: true
     },
-    noDataMessage: 'No data found',
+    noDataMessage: 'No user created',
     columns: {
       firstName: {
         title: 'First Name',
@@ -107,84 +108,84 @@ export class UserComponent {
 
     this.source = new LocalDataSource();
 
-    this.loadData((data) => {
-      this.data = data;
+    this.loadData((user) => {
+      this.user = user;
     });
   }
 
-  public loadData(data) {
+  public loadData(user) {
     const req = new XMLHttpRequest();
-    req.open('GET', 'http://edupay-api.azurewebsites.net/api/admin/user/get-all');
+    req.open('GET', 'assets/data/users.json'); // http://edupay-api.azurewebsites.net/api/admin/user/get-all
     req.onload = () => {
-      data(JSON.parse(req.response));
+      user(JSON.parse(req.response));
     };
     req.send();
   }
 
-  public onDeleteConfirm(event): void {
+  public onDeleteConfirm(user) {
     if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-      this.toastrService.success('User successfully deleted', 'Success!');
-
-    } else {
-      event.confirm.reject();
-      const req = this.http.delete('http://edupay-api.azurewebsites.net/api/Values/' + event.id).subscribe(
+      const req = this.userService.delete(user.id).subscribe(
         res => {
           console.log(res);
-          event.confirm.resolve(event.newData);
+          user.confirm.resolve();
+          this.toastrService.success('User successfully deleted', 'Success!');
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          this.toastrService.error('User not deleted', 'error!');
-
         } else {
-          console.log('Server-side error occured.');
+          this.toastrService.error('Could not delete user', 'error!');
         }
       });
+
+    } else {
+      user.confirm.reject();
     }
   }
 
-  public onRowSelect(event) {
-   // console.log(event);
+  public onRowSelect(user) {
+   // console.log(user);
   }
 
-  public onUserRowSelect(event) {
-    // console.log(event);   //this select return only one page rows
+  public onUserRowSelect(user) {
+    // console.log(user);   //this select return only one page rows
   }
 
-  public onRowHover(event) {
-    // console.log(event);
+  public onRowHover(user) {
+    // console.log(user);
   }
 
-  onPostCall(event) {
-    event.confirm.resolve(event.newData);
-    const req = this.http.post('http://edupay-api.azurewebsites.net/user/create/', this.data).subscribe(
-      res => {
-        console.log(res);
-        this.toastrService.success('User successfully added', 'Success!');
-        event.confirm.resolve(event.newData);
-    },
-    (err: HttpErrorResponse) => {
-
-      this.toastrService.error('An error occured ', 'Try again!');
-      if (err.error instanceof Error) {
-        console.log('Client-side error occured.');
-      } else {
-        console.log('Server-side error occured.');
-      }
-    });
- }
-
- onPutCall(event) {
-  event.confirm.resolve(event.newData);
-         // console.log(event.newData); //this contains the new edited data
+  onPostCall(user) {
+  user.confirm.resolve(user.newUser);
+         // console.log(user.newUser); //this contains the new edited user
       // your post request goes here
      //    example
-  const req = this.http.put('http://edupay-api.azurewebsites.net/api/Values/' + event.newData.id, this.data).subscribe(
+  const req = this.userService.postData(user).subscribe(
     res => {
       console.log(res);
       this.toastrService.success('User successfully updated', 'Success!');
-      event.confirm.resolve(event.newData);
+      user.confirm.resolve(user.newUser);
+  },
+  (err: HttpErrorResponse) => {
+    this.toastrService.error('An error occured ', 'Try again!');
+    if (err.error instanceof Error) {
+      console.log('Client-side error occured.');
+    } else {
+      console.log('Server-side error occured.');
+    }
+  })
+}
+
+
+ onPutCall(user) {
+  user.confirm.resolve(user.newUser);
+         // console.log(user.newUser); //this contains the new edited user
+      // your post request goes here
+     //    example
+  const req = this.userService.update( user.newUser.id, ).subscribe(
+    res => {
+      console.log(res);
+      this.toastrService.success('User successfully updated', 'Success!');
+      user.confirm.resolve(user.newUser);
   },
   (err: HttpErrorResponse) => {
     this.toastrService.error('An error occured ', 'Try again!');
@@ -197,5 +198,3 @@ export class UserComponent {
   }
 
 }
-
-

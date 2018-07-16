@@ -12,16 +12,13 @@
 </div>
 
 <div class="row">
-    <div *ngFor="let school of schools | paginate: { itemsPerPage: 9, currentPage: p }; let i = index;" class="col-xl-4 col-lg-6 mb-4">
+    <div *ngFor="let school of allSchools | paginate: { itemsPerPage: 9, currentPage: p }; let i = index;" class="col-xl-4 col-lg-6 mb-4">
         <div class="flip">
             <div class="content">
                 <div class="front">
                     <div class="card border-0 box-shadow rounded-0">
                         <div class="card-header border-0 rounded-0 text-muted">
                             <h6 class="mb-0" style="color: #000 !important;" >
-                                <i *ngIf="!school.settings.isDeleted" class="fa fa-user mr-2" [ngClass]="{ 'text-success': school.settings.isActive, 
-                                                                        'text-inverse': !school.settings.isActive}" placement="bottom" [ngbTooltip]="(school.settings.isActive) ? 'active' : 'passive'"></i>
-                                <i *ngIf="school.settings.isDeleted" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'deleted'"></i>
                                 {{school.fullname}}                            </h6>
                             <div class="widget-controls"> 
                                 <a (click)="openMenuAssign($event)" href="javascript:void(0);" class="transition"><i class="fa fa-bars"></i></a> 
@@ -59,9 +56,7 @@
                     <div class="card border-0 box-shadow rounded-0">
                         <div class="card-header border-0 rounded-0 text-muted">
                             <h5 class="mb-0">
-                                <i *ngIf="!school.settings.isDeleted" class="fa fa-user mr-2" [ngClass]="{ 'text-success': school.settings.isActive, 
-                                                                        'text-inverse': !school.settings.isActive}" placement="bottom" [ngbTooltip]="(school.settings.isActive) ? 'active' : 'passive'"></i>
-                                <i *ngIf="school.settings.isDeleted" class="fa fa-user mr-2 text-danger" placement="bottom" [ngbTooltip]="'Not activated'"></i>
+                                
                                 {{school.fullname}}
                             </h5>
                             <div class="widget-controls"> 
