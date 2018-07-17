@@ -24,6 +24,8 @@ import 'rxjs/Rx';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { AuthService } from './services/auth.service';
 import { HttpsRequestInterceptor } from './module/interceptor/http.interceptor';
+import { ConfigService } from './services/config.service';
+import { LoginserviceService } from './services/loginservice.service';
 
 
 
@@ -41,9 +43,9 @@ import { HttpsRequestInterceptor } from './module/interceptor/http.interceptor';
       apiKey: 'AIzaSyDe_oVpi9eRSN99G4o6TwVjJbFBNr58NxE'
     }),
     CalendarModule.forRoot(),
-    routing,  HttpClientModule, HttpModule, ToastrModule.forRoot(), LoginModule,  BrowserModule, ToastModule.forRoot()
+    routing,  HttpClientModule, HttpModule, ToastrModule.forRoot(), LoginModule,   BrowserModule, ToastModule.forRoot()
   ],
-  providers: [ AppSettings, AuthService, AuthGuard, CreateService, {
+  providers: [ AppSettings, AuthService, AuthGuard, CreateService, ConfigService, LoginserviceService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,
     multi: true
@@ -51,7 +53,7 @@ import { HttpsRequestInterceptor } from './module/interceptor/http.interceptor';
     provide: HTTP_INTERCEPTORS,
     useClass: HttpsRequestInterceptor,
     multi: true
-  }, {provide: LocationStrategy, useClass: HashLocationStrategy}
+  }, {provide: LocationStrategy, useClass: HashLocationStrategy},
 ],
   bootstrap: [ AppComponent ]
 })

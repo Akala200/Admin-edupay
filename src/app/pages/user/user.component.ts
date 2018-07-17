@@ -154,6 +154,9 @@ export class UserComponent {
     // console.log(user);
   }
 
+
+
+
   onPostCall(user) {
   user.confirm.resolve(user.newUser);
          // console.log(user.newUser); //this contains the new edited user

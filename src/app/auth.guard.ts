@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
 
     canActivate(): boolean {
       console.log('i am checking to see if you are logged in');
-      if (this._authService.loggedIn()) {
+      if (localStorage.getItem('currentUser')) {
         return true
       } else {
         this._router.navigate(['/login'])
@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     }
 
     canActivateChild(): boolean {
-      if (this._authService.loggedIn()) {
+      if (localStorage.getItem('currentUser')) {
         return true
       } else {
         this._router.navigate(['/login'])

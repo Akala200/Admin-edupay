@@ -55,6 +55,7 @@ import { HttpModule } from '@angular/http';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { UserComponent } from './user/user.component';
 import { SchoolsModule } from './schools/schools.module';
+import { EmailDirective } from './email.directive';
 
 
 
@@ -95,6 +96,7 @@ import { SchoolsModule } from './schools/schools.module';
     FavoritesComponent,
     UserComponent,
     SearchComponent,
+    EmailDirective,
   ],
   providers: [
     {

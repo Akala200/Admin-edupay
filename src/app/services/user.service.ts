@@ -24,7 +24,7 @@ postData(user) {
   .set('Access-Control-Allow-Headers', 'Content-Type')
   .set('Access-Control-Allow-Origin', '*').set('Access-Control-Allow-Headers', 'Content-Type')
   .set('Access-Control-Allow-Methods', 'POST').set('Content-type',  'application/json; charset=utf-8')
-  .set('Access-Control-Allow-Headers', 'Content-Type; Authorization; X-Requested-With').set('Access-Control-Allow-Credentials', 'true')
+  .set('Access-Control-Allow-Headers', 'Authorization; X-Requested-With').set('Access-Control-Allow-Credentials', 'true')
      // .set('Authorization', 'auth-token');
      return this.http.post( url, { headers }).map((response: Response) => {return response.json().response});
     }

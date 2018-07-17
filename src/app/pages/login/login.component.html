@@ -9,11 +9,12 @@
         </div>
     
         <!-- Login Form -->
-        <form  #loginForm="ngForm" (ngSubmit)="OnSubmit(UserName.value,Password.value)"> 
-          <input type="text" class="fadeIn second"  #UserName ngModel name="UserName" placeholder="Username"  required >
-          <input type="password"  class="fadeIn third"  #Password ngModel name="Password" placeholder="Password" required >
+        <form name="form" (ngSubmit)="login()" #f="ngForm" novalidate> 
+          <input  class="fadeIn second"id="email" type="text" name="username" placeholder="Enter Username" [(ngModel)]="model.username" #username="ngModel" required >
+          <input  class="fadeIn third"  type="password" name="password" placeholder="Enter Password" [(ngModel)]="model.password" #password="ngModel" required>
           <div style="margin-right: 240px; margin-bottom:  5px; margin-top:  10px;"><input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe">  Remember me</div>
-          <input type="submit" class="fadeIn fourth"  style="width: 345px;" value="Log In">
+          <input  class="fadeIn fourth"  style="width: 345px;" value="Log In" type="submit">
+
       </form>
         <!-- Remind Passowrd -->
         <div id="formFooter">
@@ -24,4 +25,3 @@
     </div>
 </div>
 
-             

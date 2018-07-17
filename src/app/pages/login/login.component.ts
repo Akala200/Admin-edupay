@@ -1,9 +1,17 @@
-import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ViewEncapsulation, ViewContainerRef, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpHeaders, HttpClient} from '@angular/common/http';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService, GlobalConfig } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
+// tslint:disable-next-line:import-blacklist
+import { Subscription } from 'rxjs';
+import {User} from '../../model/user.model';
+import { Credentials } from '../../model/uselogin.model';
+import { LoginserviceService } from '../../services/loginservice.service';
+import { UserComponent } from '../user/user.component';
+
+
 
 
 
@@ -18,42 +26,54 @@ const types = ['success', 'error', 'info', 'warning'];
   styleUrls: ['./login.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
 
+  private subscription: Subscription;
 
-  // tslint:disable-next-line:no-inferrable-types
-  isLoginError: boolean = false;
-  private _loginUrl = 'https://reqres.in/api/login';
-  options: GlobalConfig;
-    model: any = {};
-    loading = false;
-    returnUrl: string;
-
+  brandNew: boolean;
+  errors: string;
+  isRequesting: boolean;
+  submitted = false;
+  credentials: Credentials = { email: '', password: '' };
+  model: any = {};
 
 
 
   // tslint:disable-next-line:max-line-length
-  constructor(private _auth: AuthService, private _router: Router, private http: HttpClient, public toastr: ToastsManager, vcr: ViewContainerRef, public toastrService: ToastrService) {
-    this.options = this.toastrService.toastrConfig;
-    this.toastr.setRootViewContainerRef(vcr);
+  constructor(private userService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, public toastrService: ToastrService) { }
+
+    ngOnInit() {
+
+    // subscribe to router event
+    this.subscription = this.activatedRoute.queryParams.subscribe(
+      (param: any) => {
+         this.brandNew = param['brandNew'];
+         this.credentials.email = param['email'];
+      });
+
   }
 
-  OnSubmit(userName, password) {
-    this._auth.loginUser(userName, password).subscribe((data: any) => {
-      localStorage.setItem('token', data.access_token)
-      this._router.navigate(['../pages/dashboard'])
-    },
-    (err: HttpErrorResponse) => {
-
-      console.log(err.error);
-      console.log(err.name);
-      console.log(err.message);
-      console.log(err.status);
-      this.toastrService.error('Please try again', 'Unable to log in');
-    });
-  }
-
+   ngOnDestroy() {
+    // prevent memory leak by unsubscribing
+    this.subscription.unsubscribe();
   }
 
 
 
+  login() {
+    this.userService.login(this.model.username, this.model.password)
+.subscribe(
+  res => {
+    this.router.navigate(['pages/dashboard']);
+    this.toastrService.success('User successfully updated', 'Success!');
+},
+(err: HttpErrorResponse) => {
+  this.toastrService.error('An error occured ', 'Try again!');
+  if (err.error instanceof Error) {
+    console.log('Client-side error occured.');
+  } else {
+    console.log('Server-side error occured.');
+  }
+})
+}
+}

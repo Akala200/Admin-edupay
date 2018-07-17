@@ -1,38 +1,55 @@
-
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {  HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map'
+import { User } from '../model/user.model';
+import * as moment from 'moment';
 
 
 @Injectable()
 export class AuthService {
+    constructor(private http: HttpClient) { }
 
-    private _loginUrl = 'https://reqres.in/api/login';
+    login(email: string, password: string ) {
+
+      const headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*');
 
 
-    constructor(private http: HttpClient, private _router: Router) { }
-
-    loginUser(userName, password) {
-      const data = 'username=' + userName + '&password=' + password + '&grant_type=password';
-      const reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded', 'No-Auth': 'True' });
-      return this.http.post(this._loginUrl + '/token', data, { headers: reqHeader });
+      return this.http.post<User>('http://edupay-api.azurewebsites.net/login', {email, password, headers})
+          .do(res => this.setSession)
+          .shareReplay();
     }
 
-    loggedIn() {
-      return !!localStorage.getItem('token')
+       // .set('Authorization', 'auth-token');
+
+    private setSession(authResult) {
+      const expiresAt = moment().add(authResult.expiresIn, 'second');
+
+      localStorage.setItem('currentUser', authResult.idToken);
+      localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()) );
     }
+
+
 
     logoutUser(user) {
-      localStorage.removeItem('token');
-      this._router.navigate(['../login']);
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('expires_at');
+      return this.http.post<User>('http://edupay-api.azurewebsites.net/logoff', {user})
 
     }
 
-    getToken() {
-      return localStorage.getItem('token')
+    public isLoggedIn() {
+      return moment().isBefore(this.getExpiration());
     }
 
+    isLoggedOut() {
+      return !this.isLoggedIn();
+    }
 
-  }
+    getExpiration() {
+      const expiration = localStorage.getItem('expires_at');
+      const expiresAt = JSON.parse(expiration);
+      return moment(expiresAt);
+    }
+    }
