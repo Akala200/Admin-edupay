@@ -13,7 +13,8 @@ export class AuthService {
     login(email: string, password: string ) {
 
       const headers = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*');
+      // tslint:disable-next-line:max-line-lengt
+      .set('Content-type',  'application/json')
 
 
       return this.http.post<User>('http://edupay-api.azurewebsites.net/login', {email, password, headers})

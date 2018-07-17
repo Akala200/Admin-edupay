@@ -11,7 +11,13 @@ export class JwtInterceptor implements HttpInterceptor {
         if (currentUser) {
             const cloned = request.clone({
                 headers: request.headers.set('Authorization',
-                    'Bearer ' + currentUser)
+                    // tslint:disable-next-line:max-line-length
+                    'Bearer ' + currentUser).set('Access-Control-Allow-Origin', '*, http://edupay-api.azurewebsites.net').set('Access-Control-Allow-Headers', 'Content-Type')
+                    .set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT').set('Content-type',  'application/json')
+                    .set('Access-Control-Allow-Credentials', 'true')
+                    // tslint:disable-next-line:max-line-length
+                    .set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding')
+
             });
 
             return next.handle(cloned);
